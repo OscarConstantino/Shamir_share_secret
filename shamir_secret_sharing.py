@@ -2,6 +2,7 @@ from os import urandom
 from random import sample
 from math import sqrt
 
+#Shamir class with the necessary operations.
 class Shamir:
     secret = 0
     n_parts = 0
