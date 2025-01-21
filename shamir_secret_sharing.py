@@ -1,5 +1,4 @@
 from os import urandom
-from random import sample
 from math import sqrt
 
 class Shamir:
@@ -8,7 +7,7 @@ class Shamir:
     k_parts = 0
     polynomial = []
     points = []
-    prime_number = 2
+    _PRIME = 2**4096 + 1761
 
     def __init__(self):
         #Validating that secret is an integer
@@ -27,11 +26,14 @@ class Shamir:
             Shamir.k_parts = k_parts
         Shamir.polynomial_construction(self)
         Shamir.points_generation(self)
+        return True
         
     def generate_prime_number(self, size):
+        if size == 7:
+            return Shamir._PRIME
         random_number = int.from_bytes(urandom(size))
-        if random_number < Shamir.secret:
-            return Shamir.generate_larger_prime_number(self, size + 1)
+        if random_number < Shamir.secret and size:
+            return Shamir.generate_prime_number(self, size + 1)
         if not Shamir.check_prime(self, random_number):
             return Shamir.generate_prime_number(self, size)
         return random_number
