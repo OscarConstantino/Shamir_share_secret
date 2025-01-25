@@ -55,7 +55,6 @@ def clear_values():
     l_secret.config(text="")
     text_widget.delete(1.0, END)
 
-
 def generate_button(part,i,prime_number):
     # clear_values generate the buttons that will export the shares
     # Params:
