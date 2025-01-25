@@ -55,6 +55,20 @@ def clear_values():
     l_secret.config(text="")
     text_widget.delete(1.0, END)
 
+def generate_button(part,i,prime_number):
+    # clear_values generate the buttons that will export the shares
+    # Params:
+        # part          -> list with the point position and value.
+        # i             -> integer value with the current iteration
+        # prime_number  -> integer value with the prime number used for the secret sharing process
+    # Returns:
+        # Button -> button
+    # Description:
+        # This method create buttons to fill in the frame with the correct values
+    button = Button(left_frame, text=f"Part {i+1}", width=10, height=2, command=lambda: download_file(part, prime_number))
+    button.grid(row=i+5, column=0, padx=10, pady=10)
+    return button
+
 def calculate_share_secret():
     # clear_values generate the shares of the secret number with the given values
     # Params:
@@ -72,8 +86,8 @@ def calculate_share_secret():
         shamir_instance.get_values(secret=secret_number,n_parts=n_elements, k_parts=k_number)
         delete_buttons()
         for i, part in enumerate(shamir_instance.points):
-            button = Button(left_frame, text=f"Part {i+1}", width=10, height=2, command=lambda: download_file(part, shamir_instance.prime_number))
-            button.grid(row=i+5, column=0, padx=10, pady=10)
+            print(part)
+            button = generate_button(part, i, shamir_instance.prime_number)
             exported_shares.append(button)  # Track the new button
         update_scrollregion()
     except TypeError:
